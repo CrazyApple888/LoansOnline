@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Loans Online</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="registration">Регистрация</string>
+    <string name="password">Пароль</string>
+    <string name="repeat_password">Повторите пароль</string>
+    <string name="name">Имя</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="nameError">Только латиница и кириллица</string>
+    <string name="passwordError">8–30 латинских символов, включая заглавные и строчные, и цифры</string>
+    <string name="repeatPasswordError">Пароли не совпадают</string>
+</resources>
