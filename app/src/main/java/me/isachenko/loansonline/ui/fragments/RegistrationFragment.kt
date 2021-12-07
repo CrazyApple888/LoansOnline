@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.viewModels
 import me.isachenko.loansonline.R
 import me.isachenko.loansonline.databinding.FragmentRegistrationBinding
 import me.isachenko.loansonline.presentation.RegistrationViewModel
-
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegistrationFragment : Fragment() {
 
@@ -25,7 +24,7 @@ class RegistrationFragment : Fragment() {
     private lateinit var passwordError: String
     private lateinit var repeatPasswordError: String
 
-    private val viewModel: RegistrationViewModel by viewModels()
+    private val viewModel: RegistrationViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,22 +36,37 @@ class RegistrationFragment : Fragment() {
     ): View? {
         _binding = FragmentRegistrationBinding.inflate(inflater, container, false)
 
+        initTextListeners()
+        initErrorMessages()
+
+        viewModel.registrationResult.observe(this) { res ->
+            //todo
+            if (res) {
+                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                navigateBack()
+            }
+            else Toast.makeText(context, "Failure", Toast.LENGTH_SHORT).show()
+        }
+
+        binding.registerButton.setOnClickListener {
+            viewModel.register(
+                binding.nameEditText.text.toString(),
+                binding.passwordEditText.text.toString()
+            )
+        }
+
+        return binding.root
+    }
+
+    private fun navigateBack() {
+        parentFragmentManager.popBackStack()
+    }
+
+    private fun initErrorMessages() {
         nameError = getString(R.string.nameError)
         passwordError = getString(R.string.passwordError)
         repeatPasswordError = getString(R.string.repeatPasswordError)
 
-        initTextListeners()
-
-        binding.registerButton.setOnClickListener {
-            //todo: send api request
-            Toast.makeText(
-                requireContext(),
-                "Goo",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        return binding.root
     }
 
     private fun initTextListeners() {

@@ -1,4 +1,4 @@
-package me.isachenko.loansonline.data.requests
+package me.isachenko.loansonline.data.network.requests
 
 data class UserRequestBody(
     val name: String,

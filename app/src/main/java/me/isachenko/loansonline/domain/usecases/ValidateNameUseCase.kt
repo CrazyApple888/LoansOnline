@@ -1,4 +1,4 @@
-package me.isachenko.loansonline.domain
+package me.isachenko.loansonline.domain.usecases
 
 class ValidateNameUseCase {
 
