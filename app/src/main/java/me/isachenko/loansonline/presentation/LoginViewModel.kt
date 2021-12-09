@@ -1,18 +1,24 @@
 package me.isachenko.loansonline.presentation
 
-import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import me.isachenko.loansonline.domain.model.ApiResult
+import me.isachenko.loansonline.domain.entity.ApiResult
 import me.isachenko.loansonline.domain.usecases.LoginUseCase
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
     private val loginErrorMessage: String
 ) : ViewModel() {
+
+    private val exceptionHandler = CoroutineExceptionHandler { ctx, err ->
+        //todo handle exception
+        Log.i("ISACHTAG", "Got exception ${err.message}")
+    }
 
     private val _isLoginSuccessful = MutableLiveData<Boolean>()
     val isLoginSuccessful: LiveData<Boolean> get() = _isLoginSuccessful
@@ -24,7 +30,7 @@ class LoginViewModel(
     var password: String = ""
 
     fun login() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val result = loginUseCase(name, password)
             when(result) {
                 is ApiResult.Success -> _isLoginSuccessful.value = true

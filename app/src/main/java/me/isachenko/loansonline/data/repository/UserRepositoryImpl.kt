@@ -3,17 +3,17 @@ package me.isachenko.loansonline.data.repository
 import android.content.SharedPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import me.isachenko.loansonline.data.network.requests.UserRequestBody
+import me.isachenko.loansonline.data.model.requests.UserRequestBody
 import me.isachenko.loansonline.data.network.retrofit.AuthenticationService
-import me.isachenko.loansonline.domain.model.ApiResult
+import me.isachenko.loansonline.domain.entity.ApiResult
 import me.isachenko.loansonline.domain.repository.UserRepository
 
 class UserRepositoryImpl(
     private val sharedPreferences: SharedPreferences,
-    private val authService: AuthenticationService
+    private val authService: AuthenticationService,
+    private val apiKeyPreferenceName: String
 ) : UserRepository {
 
-    private val apiKeyPreferenceName = "APIKEY"
 
     override suspend fun register(name: String, password: String): ApiResult {
         val request = UserRequestBody(name, password)
@@ -41,7 +41,4 @@ class UserRepositoryImpl(
             ApiResult.Failure(result.code(), result.message())
         }
     }
-
-    override fun hasKey(): Boolean =
-        sharedPreferences.contains(apiKeyPreferenceName)
 }

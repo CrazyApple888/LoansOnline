@@ -5,8 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import me.isachenko.loansonline.domain.model.ApiResult
+import me.isachenko.loansonline.domain.entity.ApiResult
 import me.isachenko.loansonline.domain.usecases.RegisterUserUseCase
 import me.isachenko.loansonline.domain.usecases.ValidateNameUseCase
 import me.isachenko.loansonline.domain.usecases.ValidatePasswordUseCase
@@ -16,6 +17,11 @@ class RegistrationViewModel(
     private val validateNameUseCase: ValidateNameUseCase,
     private val registerUserUseCase: RegisterUserUseCase
 ) : ViewModel() {
+
+    private val exceptionHandler = CoroutineExceptionHandler { ctx, err ->
+        //todo handle exception
+        Log.i("ISACHTAG", "Got exception ${err.message}")
+    }
 
     private val _registrationResult = MutableLiveData<Boolean>()
     val registrationResult: LiveData<Boolean> get() = _registrationResult
@@ -30,7 +36,7 @@ class RegistrationViewModel(
         validateNameUseCase(name)
 
     fun register(name: String, password: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val result = registerUserUseCase.invoke(name, password)
             when (result) {
                 is ApiResult.Success -> _registrationResult.value = true

@@ -1,4 +1,4 @@
-package me.isachenko.loansonline.data.network.responses
+package me.isachenko.loansonline.data.model.responses
 
 data class RegistrationResponse(
     val name: String,
