@@ -12,7 +12,8 @@ import me.isachenko.loansonline.domain.usecases.LoginUseCase
 
 class LoginViewModel(
     private val loginUseCase: LoginUseCase,
-    private val loginErrorMessage: String
+    private val loginErrorMessage: String,
+    private val keyOperationsInteractor: KeyOperationsInteractor
 ) : ViewModel() {
 
     private val exceptionHandler = CoroutineExceptionHandler { ctx, err ->
@@ -33,7 +34,12 @@ class LoginViewModel(
         viewModelScope.launch(exceptionHandler) {
             val result = loginUseCase(name, password)
             when(result) {
-                is ApiResult.Success -> _isLoginSuccessful.value = true
+                is ApiResult.Success -> {
+                    _isLoginSuccessful.value = true
+                    result.data?.also {
+                        keyOperationsInteractor.saveKey(it)
+                    }
+                }
                 is ApiResult.Failure -> handleError()
             }
         }

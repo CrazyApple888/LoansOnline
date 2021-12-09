@@ -12,4 +12,7 @@ class KeyOperationsInteractor(
     fun getKey(): String? =
         repository.getKey()
 
+    fun saveKey(key: String) =
+        repository.saveKey(key)
+
 }

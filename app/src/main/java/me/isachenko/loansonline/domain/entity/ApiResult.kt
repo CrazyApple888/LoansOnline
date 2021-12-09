@@ -1,6 +1,6 @@
 package me.isachenko.loansonline.domain.entity
 
-sealed interface ApiResult {
-    object Success: ApiResult
-    data class Failure(val errorCode: Int, val message: String) : ApiResult
+sealed interface ApiResult<T> {
+    data class Success<T>(val data: T? = null): ApiResult<T>
+    data class Failure<T>(val errorCode: Int, val message: String, val data: T? = null) : ApiResult<T>
 }

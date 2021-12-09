@@ -14,20 +14,19 @@ class UserRepositoryImpl(
     private val apiKeyPreferenceName: String
 ) : UserRepository {
 
-
-    override suspend fun register(name: String, password: String): ApiResult {
+    override suspend fun register(name: String, password: String): ApiResult<Any> {
         val request = UserRequestBody(name, password)
         val result = withContext(Dispatchers.IO) {
             authService.register(request)
         }
         return if (result.isSuccessful) {
-            ApiResult.Success
+            ApiResult.Success()
         } else {
             ApiResult.Failure(result.code(), result.message())
         }
     }
 
-    override suspend fun login(name: String, password: String): ApiResult {
+    override suspend fun login(name: String, password: String): ApiResult<String> {
         val user = UserRequestBody(name, password)
         val result = withContext(Dispatchers.IO) {
             authService.login(user)
@@ -36,7 +35,7 @@ class UserRepositoryImpl(
             sharedPreferences.edit()
                 .putString(apiKeyPreferenceName, result.body())
                 .apply()
-            ApiResult.Success
+            ApiResult.Success(result.body())
         } else {
             ApiResult.Failure(result.code(), result.message())
         }

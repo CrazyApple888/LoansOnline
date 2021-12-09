@@ -45,7 +45,7 @@ val appModule = module {
     factory { KeyOperationsInteractor(get()) }
 
     viewModel { RegistrationViewModel(get(), get(), get()) }
-    viewModel { LoginViewModel(get(), provideLoginErrorMessage(androidContext())) }
+    viewModel { LoginViewModel(get(), provideLoginErrorMessage(androidContext()), get()) }
     viewModel { MainViewModel(get()) }
 }
 
