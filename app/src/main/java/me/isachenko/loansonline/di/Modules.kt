@@ -15,14 +15,13 @@ import me.isachenko.loansonline.domain.repository.UserRepository
 import me.isachenko.loansonline.domain.usecases.LoginUseCase
 import me.isachenko.loansonline.domain.usecases.ValidateNameUseCase
 import me.isachenko.loansonline.domain.usecases.ValidatePasswordUseCase
-import me.isachenko.loansonline.presentation.KeyOperationsInteractor
+import me.isachenko.loansonline.domain.KeyOperationsInteractor
 import me.isachenko.loansonline.presentation.LoginViewModel
 import me.isachenko.loansonline.presentation.MainViewModel
 import me.isachenko.loansonline.presentation.RegistrationViewModel
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
-import org.koin.dsl.binds
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,7 +33,7 @@ val appModule = module {
     factory { RegisterUserUseCase(get()) }
     factory { LoginUseCase(get()) }
 
-    factory<UserRepository> {
+    single<UserRepository> {
         UserRepositoryImpl(
             provideSharedPreferences(androidContext()),
             provideAuthService(),

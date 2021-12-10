@@ -1,4 +1,4 @@
-package me.isachenko.loansonline.presentation
+package me.isachenko.loansonline.domain
 
 import me.isachenko.loansonline.domain.repository.KeyRepository
 

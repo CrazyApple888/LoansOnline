@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import me.isachenko.loansonline.domain.KeyOperationsInteractor
 import me.isachenko.loansonline.domain.entity.ApiResult
 import me.isachenko.loansonline.domain.usecases.LoginUseCase
 

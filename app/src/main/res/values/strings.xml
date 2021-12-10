@@ -14,4 +14,5 @@
     <string name="registration_suggest">Нет аккаунта? Зарегистрироваться</string>
     <string name="log_in">Вход</string>
     <string name="ApiKeyStorageName">APIKEY</string>
+    <string name="greetings">Приветствуем</string>
 </resources>
