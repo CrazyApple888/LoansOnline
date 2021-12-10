@@ -16,10 +16,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (viewModel.checkIfKeyContains()) {
-            navigateToHomeScreen()
-        } else {
-            navigateToLogin()
+        if (null == savedInstanceState) {
+            if (viewModel.checkIfKeyContains()) {
+                navigateToHomeScreen()
+            } else {
+                navigateToLogin()
+            }
         }
     }
 
