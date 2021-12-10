@@ -2,6 +2,9 @@ package me.isachenko.loansonline.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import me.isachenko.loansonline.R
 import me.isachenko.loansonline.presentation.MainViewModel
 import me.isachenko.loansonline.ui.fragments.HomeScreenFragment
@@ -17,23 +20,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (null == savedInstanceState) {
+            val navHostFragment =
+                supportFragmentManager.findFragmentById(R.id.main_activity_fragment_container) as NavHostFragment
+            val navController = navHostFragment.navController
             if (viewModel.checkIfKeyContains()) {
-                navigateToHomeScreen()
+                navigateToHomeScreen(navController)
             } else {
-                navigateToLogin()
+                navigateToLogin(navController)
             }
         }
     }
 
-    private fun navigateToHomeScreen() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_activity_fragment_container, HomeScreenFragment())
-            .commit()
+    private fun navigateToHomeScreen(navController: NavController) {
+        navController.navigate(R.id.bottom_navigation)
     }
 
-    private fun navigateToLogin() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_activity_fragment_container, LoginFragment())
-            .commit()
+    private fun navigateToLogin(navController: NavController) {
+        navController.navigate(R.id.loginFragment)
     }
 }

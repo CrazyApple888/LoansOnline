@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import me.isachenko.loansonline.R
 import me.isachenko.loansonline.databinding.FragmentLoginBinding
 import me.isachenko.loansonline.presentation.LoginViewModel
@@ -30,16 +32,12 @@ class LoginFragment : Fragment() {
     ): View? {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
-        binding.registrationSuggest.setOnClickListener { navigateToRegistration() }
         binding.loginButton.setOnClickListener { viewModel.login() }
         binding.nameEditText.addTextChangedListener {
             viewModel.name = binding.nameEditText.text.toString()
         }
         binding.passwordEditText.addTextChangedListener {
             viewModel.password = binding.passwordEditText.text.toString()
-        }
-        viewModel.isLoginSuccessful.observe(this) { isSuccessful ->
-            if (isSuccessful) navigateToHomeScreen()
         }
         viewModel.errorMessage.observe(this) { message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
@@ -48,16 +46,18 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.registrationSuggest.setOnClickListener { navigateToRegistration() }
+        viewModel.isLoginSuccessful.observe(this) { isSuccessful ->
+            if (isSuccessful) navigateToHomeScreen()
+        }
+    }
+
     private fun navigateToRegistration() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.main_activity_fragment_container, RegistrationFragment())
-            .addToBackStack("Registration")
-            .commit()
+        findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
     }
 
     private fun navigateToHomeScreen() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.main_activity_fragment_container, HomeScreenFragment())
-            .commit()
+        findNavController().navigate(R.id.action_loginFragment_to_bottom_navigation2)
     }
 }

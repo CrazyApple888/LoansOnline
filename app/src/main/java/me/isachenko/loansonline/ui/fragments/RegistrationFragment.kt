@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.fragment.findNavController
 import me.isachenko.loansonline.R
 import me.isachenko.loansonline.databinding.FragmentRegistrationBinding
 import me.isachenko.loansonline.presentation.RegistrationViewModel
@@ -59,7 +60,7 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun navigateBack() {
-        parentFragmentManager.popBackStack()
+        findNavController().popBackStack()
     }
 
     private fun initErrorMessages() {
