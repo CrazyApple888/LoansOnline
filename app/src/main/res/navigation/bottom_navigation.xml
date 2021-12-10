@@ -3,24 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/bottom_navigation"
-    app:startDestination="@id/blankFragment">
-
+    app:startDestination="@id/loansFragment">
     <fragment
-        android:id="@+id/blankFragment"
-        android:name="me.isachenko.loansonline.BlankFragment"
-        android:label="fragment_blank"
-        tools:layout="@layout/fragment_blank" >
+        android:id="@+id/loansFragment"
+        android:name="me.isachenko.loansonline.ui.fragments.LoansFragment"
+        android:label="fragment_loans"
+        tools:layout="@layout/fragment_loans" >
         <action
-            android:id="@+id/action_blankFragment_to_blankFragment2"
-            app:destination="@id/blankFragment2" />
+            android:id="@+id/action_loansFragment_to_profileFragment2"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
-        android:id="@+id/blankFragment2"
-        android:name="me.isachenko.loansonline.BlankFragment2"
-        android:label="fragment_blank2"
-        tools:layout="@layout/fragment_blank2" >
+        android:id="@+id/profileFragment"
+        android:name="me.isachenko.loansonline.ui.fragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
         <action
-            android:id="@+id/action_blankFragment2_to_blankFragment"
-            app:destination="@id/blankFragment" />
+            android:id="@+id/action_profileFragment2_to_loansFragment"
+            app:destination="@id/loansFragment" />
     </fragment>
 </navigation>

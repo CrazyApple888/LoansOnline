@@ -14,4 +14,7 @@
     <string name="registration_suggest">Нет аккаунта? Зарегистрироваться</string>
     <string name="log_in">Вход</string>
     <string name="ApiKeyStorageName">APIKEY</string>
+    <string name="profile">Профиль</string>
+    <string name="loans">Займы</string>
+    <string name="log_out">Выйти из аккаунта</string>
 </resources>
