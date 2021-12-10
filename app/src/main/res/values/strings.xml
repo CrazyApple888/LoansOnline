@@ -15,4 +15,6 @@
     <string name="log_in">Вход</string>
     <string name="ApiKeyStorageName">APIKEY</string>
     <string name="greetings">Приветствуем</string>
+    <string name="history">История</string>
+    <string name="empty_history">Вы пока не совершали займов</string>
 </resources>
