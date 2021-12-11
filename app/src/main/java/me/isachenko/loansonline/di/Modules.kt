@@ -19,7 +19,7 @@ import me.isachenko.loansonline.presentation.HomeScreenViewModel
 import me.isachenko.loansonline.presentation.LoginViewModel
 import me.isachenko.loansonline.presentation.MainViewModel
 import me.isachenko.loansonline.presentation.RegistrationViewModel
-import me.isachenko.loansonline.ui.LoansAdapter
+import me.isachenko.loansonline.ui.adapter.LoansAdapter
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel

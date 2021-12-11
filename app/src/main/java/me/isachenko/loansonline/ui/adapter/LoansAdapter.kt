@@ -1,5 +1,6 @@
-package me.isachenko.loansonline.ui
+package me.isachenko.loansonline.ui.adapter
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -38,13 +39,13 @@ class LoansAdapter(
 
     override fun onBindViewHolder(holder: LoanViewHolder, position: Int) {
         val loan = loans[position]
-        val imageId = when (loan.state) {
-            State.APPROVED -> approvedImageId
-            State.REGISTERED -> registeredImageId
-            State.REJECTED -> rejectedImageId
+        val (imageId, imageColor) = when (loan.state) {
+            State.APPROVED -> approvedImageId to Color.GREEN
+            State.REGISTERED -> registeredImageId to Color.YELLOW
+            State.REJECTED -> rejectedImageId to Color.RED
         }
 
-        holder.bind(loan, imageId)
+        holder.bind(loan, imageId, imageColor)
     }
 
     override fun getItemCount(): Int = loans.size

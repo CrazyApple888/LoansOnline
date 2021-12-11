@@ -20,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.button.MaterialButton
+        android:text="@string/new_loan"
         android:id="@+id/new_loan_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

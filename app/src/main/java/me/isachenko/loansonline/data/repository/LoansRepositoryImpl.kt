@@ -1,9 +1,12 @@
 package me.isachenko.loansonline.data.repository
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import me.isachenko.loansonline.data.model.responses.LoansListResponse
 import me.isachenko.loansonline.data.network.retrofit.LoansService
 import me.isachenko.loansonline.domain.entity.ApiResult
 import me.isachenko.loansonline.domain.entity.Loan
+import me.isachenko.loansonline.domain.entity.LoanConditions
 import me.isachenko.loansonline.domain.entity.State
 import me.isachenko.loansonline.domain.repository.LoansRepository
 import java.text.SimpleDateFormat
@@ -13,12 +16,18 @@ class LoansRepositoryImpl(
     private val loansService: LoansService
 ) : LoansRepository {
     override suspend fun getLoansList(): ApiResult<List<Loan>> {
-        val loans = loansService.getLoansList()
+        val loans = withContext(Dispatchers.IO) {
+            loansService.getLoansList()
+        }
         return if (loans.isSuccessful) {
             ApiResult.Success(convertDataModelToDomain(loans.body()))
         } else {
             ApiResult.Failure(loans.code(), loans.message())
         }
+    }
+
+    override suspend fun getLoanConditions(): ApiResult<LoanConditions> {
+        TODO("Not yet implemented")
     }
 
     private fun convertDataModelToDomain(response: LoansListResponse?): List<Loan>? {
