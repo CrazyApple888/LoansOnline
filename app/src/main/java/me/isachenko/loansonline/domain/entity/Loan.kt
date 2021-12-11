@@ -1,6 +1,12 @@
-package me.isachenko.loansonline.data.model.responses
+package me.isachenko.loansonline.domain.entity
 
-data class LoanDataResponse(
+enum class State{
+    APPROVED,
+    REGISTERED,
+    REJECTED
+}
+
+data class Loan(
     val amount: Int,
     val date: String,
     val firstName: String,
@@ -9,5 +15,5 @@ data class LoanDataResponse(
     val percent: Double,
     val period: Int,
     val phoneNumber: String,
-    val state: String
+    val state: State
 )

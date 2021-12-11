@@ -10,21 +10,15 @@ import retrofit2.http.*
 interface LoansService {
 
     @POST("loans")
-    suspend fun createNewLoan(
-        @Header("Authorization") token: String,
-        @Body loan: LoanRequest
-    ): Response<LoanDataResponse>
+    suspend fun createNewLoan(@Body loan: LoanRequest): Response<LoanDataResponse>
 
     @GET("loans/{Id}")
-    suspend fun getLoanData(
-        @Header("Authorization") token: String,
-        @Path("Id") id: Int
-    ): Response<LoanDataResponse>
+    suspend fun getLoanData(@Path("Id") id: Int): Response<LoanDataResponse>
 
     @GET("loans/all")
-    suspend fun getLoansList(@Header("Authorization") token: String): Response<LoansListResponse>
+    suspend fun getLoansList(): Response<LoansListResponse>
 
     @GET("loans/conditions")
-    suspend fun getLoansConditions(@Header("Authorization") token: String): Response<LoanConditionsResponse>
+    suspend fun getLoansConditions(): Response<LoanConditionsResponse>
 
 }

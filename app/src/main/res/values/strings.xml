@@ -17,4 +17,10 @@
     <string name="greetings">Приветствуем</string>
     <string name="history">История</string>
     <string name="empty_history">Вы пока не совершали займов</string>
+    <string name="surname_hint">Фамилия</string>
+
+    <string name="amountTemplate">Сумма: %d</string>
+    <string name="percentTemplate">Процентная ставка: %.2f %%</string>
+    <string name="dateTemplate">Дата займа: %s</string>
+    <string name="periodTemplate">Срок займа: %d</string>
 </resources>

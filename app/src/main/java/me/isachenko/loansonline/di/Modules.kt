@@ -8,17 +8,18 @@ import me.isachenko.loansonline.data.network.retrofit.AuthenticationService
 import me.isachenko.loansonline.data.network.retrofit.LoansEndPoint
 import me.isachenko.loansonline.data.network.retrofit.LoansService
 import me.isachenko.loansonline.data.repository.KeyRepositoryImpl
+import me.isachenko.loansonline.data.repository.LoansRepositoryImpl
 import me.isachenko.loansonline.data.repository.UserRepositoryImpl
 import me.isachenko.loansonline.domain.repository.KeyRepository
-import me.isachenko.loansonline.domain.usecases.RegisterUserUseCase
 import me.isachenko.loansonline.domain.repository.UserRepository
-import me.isachenko.loansonline.domain.usecases.LoginUseCase
-import me.isachenko.loansonline.domain.usecases.ValidateNameUseCase
-import me.isachenko.loansonline.domain.usecases.ValidatePasswordUseCase
 import me.isachenko.loansonline.domain.KeyOperationsInteractor
+import me.isachenko.loansonline.domain.repository.LoansRepository
+import me.isachenko.loansonline.domain.usecases.*
+import me.isachenko.loansonline.presentation.HomeScreenViewModel
 import me.isachenko.loansonline.presentation.LoginViewModel
 import me.isachenko.loansonline.presentation.MainViewModel
 import me.isachenko.loansonline.presentation.RegistrationViewModel
+import me.isachenko.loansonline.ui.LoansAdapter
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -32,6 +33,7 @@ val appModule = module {
     factory { ValidatePasswordUseCase() }
     factory { RegisterUserUseCase(get()) }
     factory { LoginUseCase(get()) }
+    factory { GetLoansListUseCase(get()) }
 
     single<UserRepository> {
         UserRepositoryImpl(
@@ -40,18 +42,34 @@ val appModule = module {
             provideApiKeyStorageName(androidContext())
         )
     }
-    factory<KeyRepository> {
+    single<KeyRepository> {
         KeyRepositoryImpl(
             provideSharedPreferences(androidContext()),
             provideApiKeyStorageName(androidContext())
         )
     }
+    single<LoansRepository> { LoansRepositoryImpl(provideLoansService(androidContext())) }
 
     factory { KeyOperationsInteractor(get()) }
 
     viewModel { RegistrationViewModel(get(), get(), get()) }
     viewModel { LoginViewModel(get(), provideLoginErrorMessage(androidContext()), get()) }
     viewModel { MainViewModel(get()) }
+    viewModel { HomeScreenViewModel(get()) }
+
+    factory { provideLoansAdapter(androidContext()) }
+}
+
+private fun provideLoansAdapter(context: Context): LoansAdapter {
+    return LoansAdapter(
+        context.getString(R.string.amountTemplate),
+        context.getString(R.string.percentTemplate),
+        context.getString(R.string.dateTemplate),
+        context.getString(R.string.periodTemplate),
+        R.drawable.ic_loan_approved,
+        R.drawable.ic_loan_registered,
+        R.drawable.ic_loan_rejected
+    )
 }
 
 private fun provideAuthService(): AuthenticationService {
@@ -59,7 +77,7 @@ private fun provideAuthService(): AuthenticationService {
     return LoansEndPoint().retrofit.create(AuthenticationService::class.java)
 }
 
-private fun provideLoansService(context: Context) : LoansService {
+private fun provideLoansService(context: Context): LoansService {
     return createRetrofitWithToken(context).create(LoansService::class.java)
 }
 
@@ -75,7 +93,7 @@ private fun provideLoginErrorMessage(context: Context): String {
 private fun provideApiKeyStorageName(context: Context): String =
     context.getString(R.string.ApiKeyStorageName)
 
-private fun createRetrofitWithToken(context: Context) : Retrofit {
+private fun createRetrofitWithToken(context: Context): Retrofit {
     val sharedPrefsName = context.getString(R.string.sharedPrefsName)
     val token = context.getSharedPreferences(sharedPrefsName, Context.MODE_PRIVATE).getString(
         provideApiKeyStorageName(context),
