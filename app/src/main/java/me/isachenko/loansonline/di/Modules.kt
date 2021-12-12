@@ -27,6 +27,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 
 val appModule = module {
     factory { ValidateNameUseCase() }
+    factory { ValidatePhoneUseCase() }
     factory { ValidatePasswordUseCase() }
     factory { RegisterUserUseCase(get()) }
     factory { LoginUseCase(get()) }
@@ -39,6 +40,7 @@ val appModule = module {
         UserRepositoryImpl(
             provideSharedPreferences(androidContext()),
             provideAuthService(),
+            get(),
             provideApiKeyStorageName(androidContext())
         )
     }
@@ -51,7 +53,6 @@ val appModule = module {
     single<LoansRepository> { LoansRepositoryImpl(provideLoansService(androidContext()), get()) }
 
     factory { KeyOperationsInteractor(get()) }
-
     factory { provideErrorMessageStore(androidContext()) }
 
     viewModel {
@@ -69,6 +70,8 @@ val appModule = module {
         LoanRegistrationViewModel(
             get(),
             get(),
+            get(),
+            get(),
             provideConnectionErrorMessage(androidContext())
         )
     }
@@ -77,6 +80,7 @@ val appModule = module {
     single(named("approvedImageId")) { R.drawable.ic_loan_approved }
     single(named("registeredImageId")) { R.drawable.ic_loan_registered }
     single(named("rejectedImageId")) { R.drawable.ic_loan_rejected }
+    single(named("nameRegex")) { Regex(androidContext().getString(R.string.nameRegex)) }
 }
 
 private fun provideConnectionErrorMessage(context: Context): String =

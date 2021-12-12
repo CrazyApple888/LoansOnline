@@ -1,6 +1,8 @@
 package me.isachenko.loansonline.ui.fragments
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,22 +34,31 @@ class LoanRegistrationFragment : Fragment() {
     }
 
     private fun initListeners() {
+        initTextWatcher()
         with(binding) {
             close.setOnClickListener { navigateBack() }
             nameEditText.addTextChangedListener {
                 viewModel.firstName = nameEditText.text.toString()
+                nameInputLayout.error = if (viewModel.isFirstNameCorrect()) null
+                else getString(R.string.nameError)
             }
             surnameEditText.addTextChangedListener {
                 viewModel.lastName = surnameEditText.text.toString()
+                surnameInputLayout.error = if (viewModel.isLastNameCorrect()) null
+                else getString(R.string.nameError)
             }
             phoneEditText.addTextChangedListener {
                 viewModel.phoneNumber = phoneEditText.text.toString()
+                phoneInputLayout.error = if (viewModel.isPhoneCorrect()) null
+                else getString(R.string.phoneError)
             }
             amountSlider.addOnChangeListener { slider, value, _ ->
                 viewModel.amount = value.toInt()
                 loanAmountText.text = value.toInt().toString()
                 slider.value = viewModel.amount.toFloat()
+                binding.createLoanButton.isEnabled = viewModel.isAllCorrect()
             }
+
             createLoanButton.setOnClickListener { viewModel.createLoan() }
         }
 
@@ -80,6 +91,24 @@ class LoanRegistrationFragment : Fragment() {
 
     private fun navigateBack() {
         parentFragmentManager.popBackStack()
+    }
+
+    private fun initTextWatcher() {
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                binding.createLoanButton.isEnabled = viewModel.isAllCorrect()
+            }
+        }
+
+        with(binding) {
+            nameEditText.addTextChangedListener(textWatcher)
+            surnameEditText.addTextChangedListener(textWatcher)
+            phoneEditText.addTextChangedListener(textWatcher)
+        }
     }
 
     override fun onDestroyView() {

@@ -1,11 +1,13 @@
 <resources>
     <string name="app_name">Займы Онлайн</string>
+    <string name="nameRegex">^[a-zA-Zа-яА-Я]{1,30}</string>
     <string name="registration">Регистрация</string>
     <string name="password">Пароль</string>
     <string name="repeat_password">Повторите пароль</string>
     <string name="name">Имя</string>
     <string name="register">Зарегистрироваться</string>
     <string name="nameError">Только латиница и кириллица</string>
+    <string name="phoneError">Неверный формат номера</string>
     <string name="passwordError">8–30 латинских символов, включая заглавные и строчные, и цифры</string>
     <string name="repeatPasswordError">Пароли не совпадают</string>
     <string name="login">Войти</string>
@@ -26,8 +28,6 @@
     <string name="new_loan">Оформить займ</string>
     <string name="create_new_loan">Новый займ</string>
     <string name="phone_hint">Номер телефона</string>
-    <string name="loan_period_text">Срок займа</string>
-    <string name="loan_percent">Процент займа</string>
     <string name="loan_sum">Сумма займа</string>
     <string name="create_new_loan_button_text">Оформить</string>
 
@@ -43,6 +43,9 @@
 
     <string name="success_message">Успешно</string>
     <string name="failure_message">Ошибка</string>
+    <string name="logout_message">Выйти из аккаунта?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 
     <string name="APPROVED">Подтверждена</string>
     <string name="REJECTED">Отклонена</string>

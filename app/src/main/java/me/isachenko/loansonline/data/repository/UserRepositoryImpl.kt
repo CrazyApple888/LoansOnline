@@ -3,6 +3,7 @@ package me.isachenko.loansonline.data.repository
 import android.content.SharedPreferences
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.isachenko.loansonline.data.model.ErrorMessageStore
 import me.isachenko.loansonline.data.model.requests.UserRequestBody
 import me.isachenko.loansonline.data.network.retrofit.AuthenticationService
 import me.isachenko.loansonline.domain.entity.ApiResult
@@ -11,6 +12,7 @@ import me.isachenko.loansonline.domain.repository.UserRepository
 class UserRepositoryImpl(
     private val sharedPreferences: SharedPreferences,
     private val authService: AuthenticationService,
+    private val errorMessageStore: ErrorMessageStore,
     private val apiKeyPreferenceName: String
 ) : UserRepository {
 
@@ -22,7 +24,7 @@ class UserRepositoryImpl(
         return if (result.isSuccessful) {
             ApiResult.Success()
         } else {
-            ApiResult.Failure(result.code(), result.message())
+            ApiResult.Failure(result.code(), errorMessageStore.getMessageForCode(result.code()))
         }
     }
 
@@ -37,7 +39,7 @@ class UserRepositoryImpl(
                 .apply()
             ApiResult.Success(result.body())
         } else {
-            ApiResult.Failure(result.code(), result.message())
+            ApiResult.Failure(result.code(), errorMessageStore.getMessageForCode(result.code()))
         }
     }
 }

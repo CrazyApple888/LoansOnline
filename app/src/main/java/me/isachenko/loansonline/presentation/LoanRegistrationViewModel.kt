@@ -11,14 +11,18 @@ import me.isachenko.loansonline.domain.entity.ApiResult
 import me.isachenko.loansonline.domain.entity.LoanConditions
 import me.isachenko.loansonline.domain.usecases.CreateLoanUseCase
 import me.isachenko.loansonline.domain.usecases.GetLoanConditionsUseCase
+import me.isachenko.loansonline.domain.usecases.ValidateNameUseCase
+import me.isachenko.loansonline.domain.usecases.ValidatePhoneUseCase
 
 class LoanRegistrationViewModel(
     private val getLoanConditionsUseCase: GetLoanConditionsUseCase,
     private val createLoanUseCase: CreateLoanUseCase,
+    private val validateNameUseCase: ValidateNameUseCase,
+    private val validatePhoneUseCase: ValidatePhoneUseCase,
     private val connectionErrorMessage: String
 ) : ViewModel() {
 
-    private val exceptionHandler = CoroutineExceptionHandler { ctx, err ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, err ->
         _errorMessage.value = connectionErrorMessage
         Log.i("ISACHTAG", "Got exception ${err.message}")
     }
@@ -46,7 +50,28 @@ class LoanRegistrationViewModel(
         }
     }
 
+    fun isFirstNameCorrect(): Boolean =
+        validateNameUseCase(firstName)
+
+    fun isLastNameCorrect(): Boolean =
+        validateNameUseCase(lastName)
+
+    fun isPhoneCorrect(): Boolean =
+        validatePhoneUseCase(phoneNumber)
+
+    fun isAllCorrect(): Boolean =
+        isFirstNameCorrect()
+                && isLastNameCorrect()
+                && amount > 0
+                && isPhoneCorrect()
+                && phoneNumber.isNotBlank()
+                && firstName.isNotBlank()
+                && lastName.isNotBlank()
+
     fun createLoan() {
+        if (amount <= 0) {
+            return
+        }
         viewModelScope.launch(exceptionHandler) {
             val result = createLoanUseCase(
                 amount,

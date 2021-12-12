@@ -1,5 +1,6 @@
 package me.isachenko.loansonline.ui.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -57,13 +58,30 @@ class HomeScreenFragment : Fragment() {
     }
 
     private fun navigateToLoginScreen() {
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.main_activity_fragment_container, LoginFragment())
-            .commit()
+        AlertDialog.Builder(context)
+            .setMessage(getString(R.string.logout_message))
+            .setPositiveButton(
+                getString(R.string.yes)
+            ) { dialog, _ ->
+                dialog.dismiss()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main_activity_fragment_container, LoginFragment())
+                    .commit()
+            }
+            .setNegativeButton(
+                getString(R.string.no)
+            ) { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     private fun navigateToLoanRegistration() {
         parentFragmentManager.beginTransaction()
+            .setCustomAnimations(
+                R.anim.slide_in_from_right,
+                R.anim.fade_out,
+                R.anim.fade_in,
+                R.anim.slide_out_from_left
+            )
             .replace(R.id.main_activity_fragment_container, LoanRegistrationFragment())
             .addToBackStack(null)
             .commit()
