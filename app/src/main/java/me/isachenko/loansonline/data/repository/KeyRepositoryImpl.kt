@@ -17,4 +17,8 @@ class KeyRepositoryImpl(
     override fun saveKey(key: String) {
         sharedPreferences.edit().putString(apiKeyPreferenceName, key).apply()
     }
+
+    override fun deleteKey() {
+        sharedPreferences.edit().remove(apiKeyPreferenceName).apply()
+    }
 }

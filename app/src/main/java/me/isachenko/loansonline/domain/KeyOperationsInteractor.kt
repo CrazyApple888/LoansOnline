@@ -15,4 +15,8 @@ class KeyOperationsInteractor(
     fun saveKey(key: String) =
         repository.saveKey(key)
 
+    fun deleteKey() {
+        repository.deleteKey()
+    }
+
 }

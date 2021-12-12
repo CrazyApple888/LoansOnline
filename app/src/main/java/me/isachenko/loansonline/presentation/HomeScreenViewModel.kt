@@ -7,13 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import me.isachenko.loansonline.domain.KeyOperationsInteractor
 import me.isachenko.loansonline.domain.entity.ApiResult
 import me.isachenko.loansonline.domain.entity.Loan
 import me.isachenko.loansonline.domain.usecases.GetLoansListUseCase
 
 class HomeScreenViewModel(
     private val getLoansListUseCase: GetLoansListUseCase,
-    private val connectionErrorMessage: String
+    private val connectionErrorMessage: String,
+    private val interactor: KeyOperationsInteractor
 ) : ViewModel() {
 
     private val exceptionHandler = CoroutineExceptionHandler { _, err ->
@@ -34,6 +36,10 @@ class HomeScreenViewModel(
                 is ApiResult.Failure -> _errorMessage.value = result.message
             }
         }
+    }
+
+    fun logout() {
+        interactor.deleteKey()
     }
 
 }

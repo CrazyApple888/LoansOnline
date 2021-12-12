@@ -7,4 +7,6 @@ interface KeyRepository {
     fun getKey() : String?
 
     fun saveKey(key: String)
+
+    fun deleteKey()
 }

@@ -30,6 +30,10 @@ class HomeScreenFragment : Fragment() {
 
         binding.loansRecyclerView.adapter = adapter
         binding.newLoanButton.setOnClickListener { navigateToLoanRegistration() }
+        binding.logOut.setOnClickListener {
+            viewModel.logout()
+            navigateToLoginScreen()
+        }
 
         binding.progress.isGone = false
         viewModel.loans.observe(this) { loans ->
@@ -50,6 +54,12 @@ class HomeScreenFragment : Fragment() {
         viewModel.getLoansList()
 
         return binding.root
+    }
+
+    private fun navigateToLoginScreen() {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_activity_fragment_container, LoginFragment())
+            .commit()
     }
 
     private fun navigateToLoanRegistration() {

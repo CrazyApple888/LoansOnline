@@ -64,7 +64,7 @@ val appModule = module {
     }
     viewModel { LoginViewModel(get(), provideLoginErrorMessage(androidContext()), get()) }
     viewModel { MainViewModel(get()) }
-    viewModel { HomeScreenViewModel(get(), provideConnectionErrorMessage(androidContext())) }
+    viewModel { HomeScreenViewModel(get(), provideConnectionErrorMessage(androidContext()), get()) }
     viewModel {
         LoanRegistrationViewModel(
             get(),
