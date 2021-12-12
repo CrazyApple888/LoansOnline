@@ -6,7 +6,6 @@ import com.google.gson.GsonBuilder
 import me.isachenko.loansonline.R
 import me.isachenko.loansonline.data.model.ErrorMessageStore
 import me.isachenko.loansonline.data.network.retrofit.AuthenticationService
-import me.isachenko.loansonline.data.network.retrofit.LoansEndPoint
 import me.isachenko.loansonline.data.network.retrofit.LoansService
 import me.isachenko.loansonline.data.repository.KeyRepositoryImpl
 import me.isachenko.loansonline.data.repository.LoansRepositoryImpl
@@ -17,7 +16,6 @@ import me.isachenko.loansonline.domain.KeyOperationsInteractor
 import me.isachenko.loansonline.domain.repository.LoansRepository
 import me.isachenko.loansonline.domain.usecases.*
 import me.isachenko.loansonline.presentation.*
-import me.isachenko.loansonline.ui.adapter.LoansAdapter
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -56,10 +54,17 @@ val appModule = module {
 
     factory { provideErrorMessageStore(androidContext()) }
 
-    viewModel { RegistrationViewModel(get(), get(), get()) }
+    viewModel {
+        RegistrationViewModel(
+            get(),
+            get(),
+            get(),
+            provideConnectionErrorMessage(androidContext())
+        )
+    }
     viewModel { LoginViewModel(get(), provideLoginErrorMessage(androidContext()), get()) }
     viewModel { MainViewModel(get()) }
-    viewModel { HomeScreenViewModel(get()) }
+    viewModel { HomeScreenViewModel(get(), provideConnectionErrorMessage(androidContext())) }
     viewModel {
         LoanRegistrationViewModel(
             get(),
@@ -85,8 +90,13 @@ private fun provideErrorMessageStore(context: Context): ErrorMessageStore =
     )
 
 private fun provideAuthService(): AuthenticationService {
-    //todo move LoansEndPoint to DI
-    return LoansEndPoint().retrofit.create(AuthenticationService::class.java)
+    val retrofit = Retrofit.Builder()
+        .baseUrl("https://focusstart.appspot.com/")
+        .addConverterFactory(ScalarsConverterFactory.create())
+        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().setLenient().create()))
+        .build()
+
+    return retrofit.create(AuthenticationService::class.java)
 }
 
 private fun provideLoansService(context: Context): LoansService {

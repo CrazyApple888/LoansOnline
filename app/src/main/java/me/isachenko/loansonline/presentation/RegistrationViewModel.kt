@@ -15,13 +15,17 @@ import me.isachenko.loansonline.domain.usecases.ValidatePasswordUseCase
 class RegistrationViewModel(
     private val validatePasswordUseCase: ValidatePasswordUseCase,
     private val validateNameUseCase: ValidateNameUseCase,
-    private val registerUserUseCase: RegisterUserUseCase
+    private val registerUserUseCase: RegisterUserUseCase,
+    private val connectionErrorMessage: String
 ) : ViewModel() {
 
-    private val exceptionHandler = CoroutineExceptionHandler { ctx, err ->
-        //todo handle exception
+    private val exceptionHandler = CoroutineExceptionHandler { _, err ->
         Log.i("ISACHTAG", "Got exception ${err.message}")
+        _errorMessage.value = connectionErrorMessage
     }
+
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> get() = _errorMessage
 
     private val _registrationResult = MutableLiveData<Boolean>()
     val registrationResult: LiveData<Boolean> get() = _registrationResult
@@ -37,19 +41,11 @@ class RegistrationViewModel(
 
     fun register(name: String, password: String) {
         viewModelScope.launch(exceptionHandler) {
-            val result = registerUserUseCase.invoke(name, password)
-            when (result) {
+            when (val result = registerUserUseCase.invoke(name, password)) {
                 is ApiResult.Success -> _registrationResult.value = true
-                is ApiResult.Failure -> handleError(result.errorCode, result.message)
+                is ApiResult.Failure -> _errorMessage.value = result.message
             }
         }
-    }
-
-    private fun handleError(errorCode: Int, message: String) {
-        _registrationResult.value = false
-        Log.i("ISACHTAG", "$errorCode $message")
-        //todo
-        //400 - user exists
     }
 
 }

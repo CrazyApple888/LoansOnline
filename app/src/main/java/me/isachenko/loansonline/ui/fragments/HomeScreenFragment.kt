@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isGone
 import me.isachenko.loansonline.R
 import me.isachenko.loansonline.databinding.FragmentHomeScreenBinding
@@ -30,7 +31,7 @@ class HomeScreenFragment : Fragment() {
         binding.loansRecyclerView.adapter = adapter
         binding.newLoanButton.setOnClickListener { navigateToLoanRegistration() }
 
-        //todo add progress bar on loading
+        binding.progress.isGone = false
         viewModel.loans.observe(this) { loans ->
             if (loans.isEmpty()) {
                 binding.emptyHistoryText.isGone = false
@@ -40,8 +41,12 @@ class HomeScreenFragment : Fragment() {
                 binding.loansRecyclerView.isGone = false
                 adapter.loans = loans
             }
+            binding.progress.isGone = true
         }
 
+        viewModel.errorMessage.observe(this) { error ->
+            if (error.isNotBlank()) Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+        }
         viewModel.getLoansList()
 
         return binding.root
@@ -65,5 +70,10 @@ class HomeScreenFragment : Fragment() {
             )
             .addToBackStack(null)
             .commit()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -12,28 +12,28 @@ import me.isachenko.loansonline.domain.entity.Loan
 import me.isachenko.loansonline.domain.usecases.GetLoansListUseCase
 
 class HomeScreenViewModel(
-    private val getLoansListUseCase: GetLoansListUseCase
+    private val getLoansListUseCase: GetLoansListUseCase,
+    private val connectionErrorMessage: String
 ) : ViewModel() {
 
-    private val exceptionHandler = CoroutineExceptionHandler { ctx, err ->
-        //todo handle exception
+    private val exceptionHandler = CoroutineExceptionHandler { _, err ->
         Log.i("ISACHTAG", "Got exception ${err.message}")
+        _errorMessage.value = connectionErrorMessage
     }
 
     private val _loans = MutableLiveData<List<Loan>>()
     val loans: LiveData<List<Loan>> get() = _loans
 
+    private val _errorMessage = MutableLiveData<String>()
+    val errorMessage: LiveData<String> get() = _errorMessage
+
     fun getLoansList() {
         viewModelScope.launch(exceptionHandler) {
-            when(val result = getLoansListUseCase()) {
+            when (val result = getLoansListUseCase()) {
                 is ApiResult.Success -> _loans.value = result.data ?: emptyList()
-                is ApiResult.Failure -> handleError(result.message, result.errorCode)
+                is ApiResult.Failure -> _errorMessage.value = result.message
             }
         }
-    }
-
-    private fun handleError(error: String, code: Int) {
-        //todo
     }
 
 }

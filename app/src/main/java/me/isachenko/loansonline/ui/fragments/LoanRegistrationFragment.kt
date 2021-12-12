@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import me.isachenko.loansonline.R
 import me.isachenko.loansonline.databinding.FragmentLoanRegistrationBinding
 import me.isachenko.loansonline.presentation.LoanRegistrationViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -65,10 +66,12 @@ class LoanRegistrationFragment : Fragment() {
 
         viewModel.isSuccess.observe(this) { isSuccess ->
             if (isSuccess) {
-                //todo show success message
+                Toast.makeText(context, getString(R.string.success_message), Toast.LENGTH_SHORT)
+                    .show()
                 navigateBack()
             } else {
-                //todo show failure message
+                Toast.makeText(context, getString(R.string.failure_message), Toast.LENGTH_SHORT)
+                    .show()
                 navigateBack()
             }
         }
@@ -77,6 +80,11 @@ class LoanRegistrationFragment : Fragment() {
 
     private fun navigateBack() {
         parentFragmentManager.popBackStack()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

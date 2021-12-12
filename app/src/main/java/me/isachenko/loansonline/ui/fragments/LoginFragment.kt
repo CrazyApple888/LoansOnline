@@ -14,7 +14,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoginFragment : Fragment() {
 
-    //todo null reference
     private var _binding: FragmentLoginBinding? = null
     private val binding: FragmentLoginBinding get() = _binding!!
 
@@ -59,5 +58,10 @@ class LoginFragment : Fragment() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.main_activity_fragment_container, HomeScreenFragment())
             .commit()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

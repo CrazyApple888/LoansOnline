@@ -18,7 +18,7 @@ class LoginViewModel(
 ) : ViewModel() {
 
     private val exceptionHandler = CoroutineExceptionHandler { ctx, err ->
-        //todo handle exception
+
         Log.i("ISACHTAG", "Got exception ${err.message}")
     }
 
@@ -33,8 +33,7 @@ class LoginViewModel(
 
     fun login() {
         viewModelScope.launch(exceptionHandler) {
-            val result = loginUseCase(name, password)
-            when(result) {
+            when(val result = loginUseCase(name, password)) {
                 is ApiResult.Success -> {
                     _isLoginSuccessful.value = true
                     result.data?.also {

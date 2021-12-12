@@ -41,6 +41,9 @@
     <string name="phone_number_text">Номер телефона:</string>
     <string name="status">Статус заявки:</string>
 
+    <string name="success_message">Успешно</string>
+    <string name="failure_message">Ошибка</string>
+
     <string name="APPROVED">Подтверждена</string>
     <string name="REJECTED">Отклонена</string>
     <string name="REGISTERED">Зарегистрирована</string>

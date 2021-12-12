@@ -16,7 +16,6 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RegistrationFragment : Fragment() {
 
-    //todo: null this reference
     private var _binding: FragmentRegistrationBinding? = null
     private val binding: FragmentRegistrationBinding get() = _binding!!
 
@@ -40,12 +39,15 @@ class RegistrationFragment : Fragment() {
         initErrorMessages()
 
         viewModel.registrationResult.observe(this) { res ->
-            //todo
             if (res) {
-                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.success_message), Toast.LENGTH_SHORT)
+                    .show()
                 navigateBack()
-            }
-            else Toast.makeText(context, "Failure", Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(context, getString(R.string.failure_message), Toast.LENGTH_SHORT)
+                .show()
+        }
+        viewModel.errorMessage.observe(this) { error ->
+            if (error.isNotBlank()) Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
         }
 
         binding.registerButton.setOnClickListener {
@@ -134,4 +136,8 @@ class RegistrationFragment : Fragment() {
             )
         }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
