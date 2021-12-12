@@ -36,4 +36,13 @@
     <string name="e404">Сервис не найден, попробуйте позже</string>
     <string name="connection_error">Проверьте интернет соединение и попробуйте еще раз</string>
     <string name="loan_info_title">Информация о займе</string>
+    <string name="loaner_firstname">Имя заемщика:</string>
+    <string name="loaner_lastname">Фамилия заемщика:</string>
+    <string name="phone_number_text">Номер телефона:</string>
+    <string name="status">Статус заявки:</string>
+
+    <string name="APPROVED">Подтверждена</string>
+    <string name="REJECTED">Отклонена</string>
+    <string name="REGISTERED">Зарегистрирована</string>
+    <string name="get_loan_instruction">Для получения займа используйте ближайший терминал, обслуживающий Вашу карту</string>
 </resources>

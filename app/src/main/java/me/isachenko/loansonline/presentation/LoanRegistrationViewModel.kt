@@ -31,7 +31,7 @@ class LoanRegistrationViewModel(
     var lastName: String = ""
     var phoneNumber: String = ""
 
-    private val _errorMessage = MutableLiveData<String>("")
+    private val _errorMessage = MutableLiveData("")
     val errorMessage: LiveData<String> get() = _errorMessage
 
     private val _isSuccess = MutableLiveData<Boolean>()

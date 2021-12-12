@@ -35,6 +35,7 @@ val appModule = module {
     factory { GetLoansListUseCase(get()) }
     factory { GetLoanConditionsUseCase(get()) }
     factory { CreateLoanUseCase(get()) }
+    factory { GetLoanInfoUseCase(get()) }
 
     single<UserRepository> {
         UserRepositoryImpl(
@@ -66,6 +67,7 @@ val appModule = module {
             provideConnectionErrorMessage(androidContext())
         )
     }
+    viewModel { DetailedLoanViewModel(get(), provideConnectionErrorMessage(androidContext())) }
 
     single(named("approvedImageId")) { R.drawable.ic_loan_approved }
     single(named("registeredImageId")) { R.drawable.ic_loan_registered }

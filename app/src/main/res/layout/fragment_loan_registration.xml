@@ -9,12 +9,13 @@
 
     <ImageView
         android:id="@+id/close"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:clickable="true"
         android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/new_loan_text"
+        app:layout_constraintBottom_toBottomOf="@id/new_loan_text"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/new_loan_text"
@@ -24,7 +25,6 @@
         android:text="@string/create_new_loan"
         android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

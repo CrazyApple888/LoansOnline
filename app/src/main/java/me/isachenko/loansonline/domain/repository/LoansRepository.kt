@@ -19,4 +19,6 @@ interface LoansRepository {
         phoneNumber: String
     ): ApiResult<Loan>
 
+    suspend fun getLoanInfo(loanId: Int): ApiResult<Loan>
+
 }

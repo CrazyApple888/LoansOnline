@@ -71,6 +71,17 @@ class LoansRepositoryImpl(
         }
     }
 
+    override suspend fun getLoanInfo(loanId: Int): ApiResult<Loan> {
+        val result = withContext(Dispatchers.IO) {
+            loansService.getLoanData(loanId)
+        }
+        return if (result.isSuccessful) {
+            ApiResult.Success(result.body()?.let { dataResponseToDomainLoan(it) })
+        } else {
+            ApiResult.Failure(result.code(), errorMessageStore.getMessageForCode(result.code()))
+        }
+    }
+
     private fun modelRequestToData(
         amount: Int,
         firstName: String,

@@ -17,6 +17,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/amount_text"
+            style="@style/ItemAttributeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/amountTemplate"
@@ -33,6 +34,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/percent_text"
+            style="@style/ItemAttributeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -51,6 +53,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/date"
+            style="@style/ItemAttributeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
@@ -69,6 +72,7 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/period_text"
+            style="@style/ItemAttributeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
