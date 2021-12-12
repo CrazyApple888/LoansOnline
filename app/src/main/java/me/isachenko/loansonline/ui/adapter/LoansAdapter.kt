@@ -10,10 +10,6 @@ import me.isachenko.loansonline.domain.entity.Loan
 import me.isachenko.loansonline.domain.entity.State
 
 class LoansAdapter(
-    private val amountTemplate: String,
-    private val percentTemplate: String,
-    private val dateTemplate: String,
-    private val periodTemplate: String,
     @DrawableRes private val approvedImageId: Int,
     @DrawableRes private val registeredImageId: Int,
     @DrawableRes private val rejectedImageId: Int
@@ -28,13 +24,7 @@ class LoansAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LoanViewHolder {
         val binding = ItemLoanBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return LoanViewHolder(
-            binding,
-            amountTemplate,
-            percentTemplate,
-            dateTemplate,
-            periodTemplate
-        )
+        return LoanViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: LoanViewHolder, position: Int) {

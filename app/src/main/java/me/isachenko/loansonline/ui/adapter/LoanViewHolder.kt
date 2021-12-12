@@ -6,19 +6,15 @@ import me.isachenko.loansonline.databinding.ItemLoanBinding
 import me.isachenko.loansonline.domain.entity.Loan
 
 class LoanViewHolder(
-    private val binding: ItemLoanBinding,
-    private val amountTemplate: String,
-    private val percentTemplate: String,
-    private val dateTemplate: String,
-    private val periodTemplate: String
+    private val binding: ItemLoanBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(loan: Loan, @DrawableRes imageId: Int, imageColor: Int) {
         with(binding) {
-            amountText.text = amountTemplate.format(loan.amount)
-            percentText.text = percentTemplate.format(loan.percent)
-            date.text = dateTemplate.format(loan.date)
-            periodText.text = periodTemplate.format(loan.period)
+            amountValueText.text = loan.amount.toString()
+            percentValueText.text = loan.percent.toString()
+            dateValueText.text = loan.date
+            periodValueText.text = loan.period.toString()
             statusImage.setImageResource(imageId)
             statusImage.setColorFilter(imageColor)
         }

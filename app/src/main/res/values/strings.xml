@@ -19,10 +19,20 @@
     <string name="empty_history">Вы пока не совершали займов</string>
     <string name="surname_hint">Фамилия</string>
 
-    <string name="amountTemplate">Сумма: %d</string>
-    <string name="percentTemplate">Процентная ставка: %.2f %%</string>
-    <string name="dateTemplate">Дата займа: %s</string>
-    <string name="periodTemplate">Срок займа: %d</string>
+    <string name="amountTemplate">Сумма в рублях:</string>
+    <string name="percentTemplate">Процентная ставка:</string>
+    <string name="dateTemplate">Дата займа:</string>
+    <string name="periodTemplate">Срок займа:</string>
     <string name="new_loan">Оформить займ</string>
     <string name="create_new_loan">Новый займ</string>
+    <string name="phone_hint">Номер телефона</string>
+    <string name="loan_period_text">Срок займа</string>
+    <string name="loan_percent">Процент займа</string>
+    <string name="loan_sum">Сумма займа</string>
+    <string name="create_new_loan_button_text">Оформить</string>
+
+    <string name="e401">Ошибка авторизации, перезайдите в аккаунт</string>
+    <string name="e403">Доступ к сервису запрещен, попробуйте позже</string>
+    <string name="e404">Сервис не найден, попробуйте позже</string>
+    <string name="connection_error">Проверьте интернет соединение и попробуйте еще раз</string>
 </resources>
