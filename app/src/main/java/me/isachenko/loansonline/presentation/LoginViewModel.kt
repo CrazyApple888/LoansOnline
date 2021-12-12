@@ -35,10 +35,11 @@ class LoginViewModel(
         viewModelScope.launch(exceptionHandler) {
             when(val result = loginUseCase(name, password)) {
                 is ApiResult.Success -> {
-                    _isLoginSuccessful.value = true
+                    Log.i("ISACHTAG", result.data.toString())
                     result.data?.also {
                         keyOperationsInteractor.saveKey(it)
                     }
+                    _isLoginSuccessful.value = true
                 }
                 is ApiResult.Failure -> handleError()
             }

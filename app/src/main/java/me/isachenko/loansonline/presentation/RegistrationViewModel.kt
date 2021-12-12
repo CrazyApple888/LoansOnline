@@ -30,14 +30,21 @@ class RegistrationViewModel(
     private val _registrationResult = MutableLiveData<Boolean>()
     val registrationResult: LiveData<Boolean> get() = _registrationResult
 
-    fun isPasswordCorrect(password: String): Boolean =
+    var name: String = ""
+    var password: String = ""
+    var repeatPassword: String = ""
+
+    fun isPasswordCorrect(): Boolean =
         validatePasswordUseCase(password)
 
-    fun arePasswordSame(password: String, repeatPassword: String): Boolean =
+    fun arePasswordSame(): Boolean =
         password == repeatPassword
 
-    fun isNameCorrect(name: String): Boolean =
+    fun isNameCorrect(): Boolean =
         validateNameUseCase(name)
+
+    fun isAllCorrect(): Boolean =
+        arePasswordSame() && isNameCorrect() && isPasswordCorrect()
 
     fun register(name: String, password: String) {
         viewModelScope.launch(exceptionHandler) {

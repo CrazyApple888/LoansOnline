@@ -36,7 +36,7 @@ val appModule = module {
     factory { CreateLoanUseCase(get()) }
     factory { GetLoanInfoUseCase(get()) }
 
-    single<UserRepository> {
+    factory<UserRepository> {
         UserRepositoryImpl(
             provideSharedPreferences(androidContext()),
             provideAuthService(),
@@ -44,13 +44,13 @@ val appModule = module {
             provideApiKeyStorageName(androidContext())
         )
     }
-    single<KeyRepository> {
+    factory<KeyRepository> {
         KeyRepositoryImpl(
             provideSharedPreferences(androidContext()),
             provideApiKeyStorageName(androidContext())
         )
     }
-    single<LoansRepository> { LoansRepositoryImpl(provideLoansService(androidContext()), get()) }
+    factory<LoansRepository> { LoansRepositoryImpl(provideLoansService(androidContext()), get()) }
 
     factory { KeyOperationsInteractor(get()) }
     factory { provideErrorMessageStore(androidContext()) }

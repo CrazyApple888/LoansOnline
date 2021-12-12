@@ -78,63 +78,31 @@ class RegistrationFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                binding.registerButton.isEnabled = checkAll()
+                binding.registerButton.isEnabled = viewModel.isAllCorrect()
             }
         }
         with(binding) {
-            nameEditText.addTextChangedListener { checkName() }
-            passwordEditText.addTextChangedListener { checkPassword() }
-            repeatPasswordEditText.addTextChangedListener { checkRepeatPassword() }
+            nameEditText.addTextChangedListener {
+                viewModel.name = nameEditText.text.toString()
+                nameInputLayout.error = if (viewModel.isNameCorrect()) null
+                else nameError
+            }
+            passwordEditText.addTextChangedListener {
+                viewModel.password = passwordEditText.text.toString()
+                passwordInputLayout.error = if (viewModel.isPasswordCorrect()) null
+                else passwordError
+            }
+            repeatPasswordEditText.addTextChangedListener {
+                viewModel.repeatPassword = repeatPasswordEditText.text.toString()
+                repeatPasswordInputLayout.error = if (viewModel.arePasswordSame()) null
+                else repeatPasswordError
+            }
 
             nameEditText.addTextChangedListener(textWatcher)
             passwordEditText.addTextChangedListener(textWatcher)
             repeatPasswordEditText.addTextChangedListener(textWatcher)
         }
     }
-
-    private fun checkName() =
-        with(binding) {
-            nameInputLayout.error =
-                if (viewModel.isNameCorrect(nameEditText.text.toString())) {
-                    null
-                } else {
-                    nameError
-                }
-        }
-
-    private fun checkPassword() =
-        with(binding) {
-            passwordInputLayout.error =
-                if (viewModel.isPasswordCorrect(passwordEditText.text.toString())) {
-                    null
-                } else {
-                    passwordError
-                }
-        }
-
-    private fun checkRepeatPassword() =
-        with(binding) {
-            repeatPasswordInputLayout.error =
-                if (viewModel.arePasswordSame(
-                        passwordEditText.text.toString(),
-                        repeatPasswordEditText.text.toString()
-                    )
-                ) {
-                    null
-                } else {
-                    repeatPasswordError
-                }
-        }
-
-    private fun checkAll(): Boolean =
-        with(binding) {
-            viewModel.isNameCorrect(nameEditText.text.toString()) && viewModel.isPasswordCorrect(
-                passwordEditText.text.toString()
-            ) && viewModel.arePasswordSame(
-                passwordEditText.text.toString(),
-                repeatPasswordEditText.text.toString()
-            )
-        }
 
     override fun onDestroyView() {
         super.onDestroyView()
