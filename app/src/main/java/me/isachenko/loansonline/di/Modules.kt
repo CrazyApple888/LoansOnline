@@ -21,6 +21,7 @@ import me.isachenko.loansonline.ui.adapter.LoansAdapter
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -66,7 +67,9 @@ val appModule = module {
         )
     }
 
-    factory { provideLoansAdapter() }
+    single(named("approvedImageId")) { R.drawable.ic_loan_approved }
+    single(named("registeredImageId")) { R.drawable.ic_loan_registered }
+    single(named("rejectedImageId")) { R.drawable.ic_loan_rejected }
 }
 
 private fun provideConnectionErrorMessage(context: Context): String =
@@ -78,14 +81,6 @@ private fun provideErrorMessageStore(context: Context): ErrorMessageStore =
         context.getString(R.string.e403),
         context.getString(R.string.e404),
     )
-
-private fun provideLoansAdapter(): LoansAdapter {
-    return LoansAdapter(
-        R.drawable.ic_loan_approved,
-        R.drawable.ic_loan_registered,
-        R.drawable.ic_loan_rejected
-    )
-}
 
 private fun provideAuthService(): AuthenticationService {
     //todo move LoansEndPoint to DI

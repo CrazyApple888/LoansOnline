@@ -2,9 +2,11 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="3dp"
+    android:clickable="true"
     android:elevation="10dp"
     app:cardCornerRadius="5dp">
 
@@ -43,9 +45,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/percent_text"
             app:layout_constraintStart_toEndOf="@id/percent_text"
-            app:layout_constraintTop_toTopOf="@id/percent_text"
-            app:layout_constraintBottom_toBottomOf="@id/percent_text"/>
+            app:layout_constraintTop_toTopOf="@id/percent_text" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/date"
@@ -61,9 +63,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/date"
             app:layout_constraintStart_toEndOf="@id/date"
-            app:layout_constraintTop_toTopOf="@id/date"
-            app:layout_constraintBottom_toBottomOf="@id/date"/>
+            app:layout_constraintTop_toTopOf="@id/date" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/period_text"
@@ -79,9 +81,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
+            app:layout_constraintBottom_toBottomOf="@id/period_text"
             app:layout_constraintStart_toEndOf="@id/period_text"
-            app:layout_constraintTop_toTopOf="@id/period_text"
-            app:layout_constraintBottom_toBottomOf="@id/period_text"/>
+            app:layout_constraintTop_toTopOf="@id/period_text" />
 
         <ImageView
             android:id="@+id/status_image"

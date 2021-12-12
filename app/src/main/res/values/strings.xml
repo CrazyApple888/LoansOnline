@@ -35,4 +35,5 @@
     <string name="e403">Доступ к сервису запрещен, попробуйте позже</string>
     <string name="e404">Сервис не найден, попробуйте позже</string>
     <string name="connection_error">Проверьте интернет соединение и попробуйте еще раз</string>
+    <string name="loan_info_title">Информация о займе</string>
 </resources>

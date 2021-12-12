@@ -10,7 +10,6 @@ import me.isachenko.loansonline.R
 import me.isachenko.loansonline.databinding.FragmentHomeScreenBinding
 import me.isachenko.loansonline.presentation.HomeScreenViewModel
 import me.isachenko.loansonline.ui.adapter.LoansAdapter
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeScreenFragment : Fragment() {
@@ -18,7 +17,8 @@ class HomeScreenFragment : Fragment() {
     private var _binding: FragmentHomeScreenBinding? = null
     private val binding: FragmentHomeScreenBinding get() = _binding!!
 
-    private val adapter: LoansAdapter by inject()
+    private val adapter =
+        LoansAdapter { loanId -> navigateToDetailedLoanScreen(loanId) }
     private val viewModel: HomeScreenViewModel by viewModel()
 
     override fun onCreateView(
@@ -50,6 +50,19 @@ class HomeScreenFragment : Fragment() {
     private fun navigateToLoanRegistration() {
         parentFragmentManager.beginTransaction()
             .replace(R.id.main_activity_fragment_container, LoanRegistrationFragment())
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun navigateToDetailedLoanScreen(loanId: Int) {
+        val bundle = Bundle()
+        bundle.putInt(DetailedLoanFragment.loanIdKey, loanId)
+        parentFragmentManager.beginTransaction()
+            .replace(
+                R.id.main_activity_fragment_container,
+                DetailedLoanFragment::class.java,
+                bundle
+            )
             .addToBackStack(null)
             .commit()
     }

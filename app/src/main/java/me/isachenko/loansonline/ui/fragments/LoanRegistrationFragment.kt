@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import me.isachenko.loansonline.presentation.LoanRegistrationViewModel
-import me.isachenko.loansonline.databinding.LoanRegistrationFragmentBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import androidx.core.widget.addTextChangedListener
+import me.isachenko.loansonline.databinding.FragmentLoanRegistrationBinding
+import me.isachenko.loansonline.presentation.LoanRegistrationViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LoanRegistrationFragment : Fragment() {
 
-    private var _binding: LoanRegistrationFragmentBinding? = null
-    private val binding: LoanRegistrationFragmentBinding get() = _binding!!
+    private var _binding: FragmentLoanRegistrationBinding? = null
+    private val binding: FragmentLoanRegistrationBinding get() = _binding!!
 
     private val viewModel: LoanRegistrationViewModel by viewModel()
 
@@ -22,7 +22,7 @@ class LoanRegistrationFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = LoanRegistrationFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentLoanRegistrationBinding.inflate(inflater, container, false)
 
         initListeners()
         viewModel.loadLoanConditions()
